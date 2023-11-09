@@ -12,7 +12,6 @@
 
 char *_getenv(const char *name)
 {
-	extern char **environ;
 	char *token;
 	int i = 0;
 
