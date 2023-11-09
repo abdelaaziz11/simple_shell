@@ -1,27 +1,27 @@
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
+/**
+* _getenv - get the environment variable and the PATH of variable
+* @name: name of the environment variable
+* Return: string token or NULL if Failure
+*/
 
 char *_getenv(const char *name)
 {
 	extern char **environ;
+	char *token;
 	int i = 0;
-	char *key;
 
 	while (environ[i])
 	{
-		char *env_copy = strdup(environ[i]);
-		key = strtok(env_copy, "=");
-		if (key != NULL && strcmp(key, name) == 0)
-		return (strtok(NULL, "="));
-		free(env_copy);
+		token =  strtok(environ[i], "=");
+		if (strcmp(token, name) == 0)
+			return (strtok(NULL, "="));
 		i++;
 	}
 	return (NULL);
-}
-
-int main()
-{
-	printf("%s\n", _getenv("bin"));
-	return (0);
 }
