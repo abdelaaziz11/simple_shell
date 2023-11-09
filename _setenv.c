@@ -26,7 +26,7 @@ int _setenv(const char *key, const char *value, int change_flag)
 			{
 				new_envar = malloc(strlen(key) + strlen(value) + 2);
 				new_envar = strdup(key);
-				strcat(new_envar, "-");
+				strcat(new_envar, "=");
 				strcat(new_envar, value);
 				environ[i] = new_envar;
 				return (0);
@@ -36,7 +36,7 @@ int _setenv(const char *key, const char *value, int change_flag)
 	}
 	new_envar = malloc(strlen(key) + strlen(value) + 2);
 	new_envar = strdup(key);
-	strcat(new_envar, "-");
+	strcat(new_envar, "=");
 	strcat(new_envar, value);
 	environ[i] = new_envar;
 	environ[i + 1] = NULL;
