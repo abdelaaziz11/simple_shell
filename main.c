@@ -13,13 +13,13 @@
 */
 int main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
 	int status;
 	char *buffer = NULL, **argv, *command;
 	size_t size_buf = 0;
 	ssize_t number_char;
 	pid_t pid;
+	(void)ac;
+	(void)av;
 
 	while (1)
 	{

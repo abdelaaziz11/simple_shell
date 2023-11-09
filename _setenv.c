@@ -3,21 +3,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 /**
 * _setenv - add environment variable or change environment variable
 * @key: name of environment variable
 * @value: value of environment variable
+* @change_flag: overwrite and change environment variable
 * Return: Always 0
 */
-
 int _setenv(const char *key, const char *value, int change_flag)
 {
-	extern char **environ;
 	char *new_envar;
 	int len = 0, i = 0;
 
-	if (key == NULL|| value == NULL)
+	if (key == NULL || value == NULL)
 		return (-1);
 	while (environ[i])
 	{

@@ -8,6 +8,8 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+extern char **environ;
+
 char *_getenv(const char *name);
 char *get_cmd(char *command);
 char **str_split(char *buffer, char *del);
