@@ -12,7 +12,7 @@ char *_getenv(const char *name)
 	{
 		char *env_copy = strdup(environ[i]);
 		key = strtok(env_copy, "=");
-		if (key != NULL && strcmp(key, name) == 0)
+		if (strcmp(key, name) == 0)
 		return (strtok(NULL, "="));
 		free(env_copy);
 		i++;
@@ -22,6 +22,6 @@ char *_getenv(const char *name)
 
 int main()
 {
-	printf("%s\n", _getenv("bin"));
+	printf("%s\n", _getenv("ROOT"));
 	return (0);
 }

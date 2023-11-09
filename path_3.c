@@ -5,15 +5,15 @@
 void path()
 {
 	char *path = getenv("PATH");
-
+	printf("%s\n", path);
 	if (path != NULL)
 	{
-		char *folder = strtok(path, ":");
+		char *folder = strtok(path, "/");
 
 		while (folder != NULL)
 		{
 			printf("I found a folder place: %s\n", folder);
-			folder = strtok(NULL, ":");
+			folder = strtok(NULL, "/");
 		}
 	}
 	else
