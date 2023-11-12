@@ -23,7 +23,7 @@ int main(int ac, char **av, char **env)
 
 	while (1)
 	{
-	printf("$ ");
+	write(1, "$ ", 2);
 	number_char = getline(&buffer, &size_buf, stdin);
 	if (number_char == EOF)
 		printf("\n"), exit(1);
