@@ -12,7 +12,6 @@
 
 int _unsetenv(const char *key)
 {
-	extern char **environ;
 	int i = 0, len = 0;
 
 	if (!key)
