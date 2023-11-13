@@ -28,6 +28,8 @@ int main(int ac, char **av, char **env)
 	if (number_char == EOF)
 		printf("\n"), exit(1);
 	argv = str_split(buffer, " \t\n");
+	if (buffer[0] == '#')
+		continue;
 	if (strcmp(argv[0], "exit") == 0)
 		exit(0);
 	pid = fork();
