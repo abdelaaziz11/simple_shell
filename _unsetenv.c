@@ -12,6 +12,16 @@
 
 int _unsetenv(const char *key)
 {
+	if (getenv(name) == NULL)
+	{
+		fprintf(stderr, "%s\n", key);
+		return (-1);
+	}
+	if (unsetenv(name) != 0)
+	{
+		fprintf(stderr, "%s\n", key);
+		return (-1);
+	}
 	int i = 0, len = 0;
 
 	if (!key)

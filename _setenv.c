@@ -12,6 +12,16 @@
 */
 int _setenv(const char *key, const char *value, int change_flag)
 {
+	if (getenv(name) != NULL && !overwrite)
+	{
+		fprintf(stderr, "%s\n", key);
+		return (-1);
+	}
+	if (setenv(name, value, 1) != 0)
+	{
+		fprintf(stderr, "%s\n", key);
+		return (-1);
+	}
 	char *new_envar;
 	int len = 0, i = 0;
 
