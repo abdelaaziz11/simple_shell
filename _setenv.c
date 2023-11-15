@@ -17,16 +17,6 @@ int _setenv(const char *key, const char *value, int overwrite)
 
 	if (key == NULL || value == NULL)
 		return (-1);
-	if (getenv(key) != NULL && !overwrite)
-	{
-		fprintf(stderr, "%s\n", key);
-		return (-1);
-	}
-	if (setenv(key, value, 1) != 0)
-	{
-		fprintf(stderr, "%s\n", key);
-		return (-1);
-	}
 	while (environ[i])
 	{
 		len = strlen(key);
