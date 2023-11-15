@@ -6,20 +6,19 @@
 #include <sys/wait.h>
 /**
 * main - read and implement the functions
-* @ac: argumant count
-* @av: pointer array of argument vector
+* @argc: argumant count
+* @argv: pointer array of argument vector
 * @env: environment
 * Return: 0 if success or 1 if Failure
 */
-int main(int ac, char **av, char **env)
+int main(int argc, char **argv, char **env)
 {
 	int status;
-	char *buffer = NULL, **argv, *command;
+	char *buffer = NULL, *command;
 	size_t size_buf = 0;
 	ssize_t number_char;
 	pid_t pid;
-	(void)ac;
-	(void)av;
+	(void)argc;
 
 	while (1)
 	{
