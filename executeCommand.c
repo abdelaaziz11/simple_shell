@@ -21,7 +21,6 @@ void executeCommand(char **av, char **env)
 	if (command) {
 		execve(command, av, env);
 		perror("Execution failed");
-		print_environment();
 		exit(EXIT_FAILURE);
 	}
 	else

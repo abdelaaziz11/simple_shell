@@ -17,7 +17,6 @@ char *get_cmd(char *command);
 char **str_split(char *buffer, char *del);
 int _setenv(const char *key, const char *value, int overwrite);
 int _unsetenv(const char *key);
-void print_environment();
 void executeCommand(char **av, char **env);
 
 #endif /* MAIN_H */
