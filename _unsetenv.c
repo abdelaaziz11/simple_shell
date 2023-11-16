@@ -5,27 +5,24 @@
 #include <stdlib.h>
 
 /**
-* _unsetenv - Delete environment variable
-* @key: name of environment variable
+* my_unsetenv - Delete environment variable
+* @commandArgs: command of arguments
 * Return: 0 if success or -1 if failure
 */
 
-int _unsetenv(const char *key)
+int my_unsetenv(char **commandArgs)
 {
-	int i = 0, len = 0;
-
-	if (!key)
-		return (-1);
-	while (environ[i])
+	if (commandArgs[1] == NULL || commandArgs[2] != NULL)
 	{
-		len = strlen(key);
-		if (strncmp(environ[i], key, len) == 0)
-		{
-		free(environ[i]);
-			return (0);
-		}
-		i++;
+	fprintf(stderr, "Usage: unsetenv VARIABLE\n");
+		return (-1);
 	}
-	free(environ[i]);
+
+	if (unsetenv(commandArgs[1]) == -1)
+	{
+		perror("unsetenv");
+		return (-1);
+	}
+
 	return (0);
 }

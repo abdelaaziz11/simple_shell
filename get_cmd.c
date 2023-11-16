@@ -17,7 +17,6 @@ char *get_cmd(char *command)
 	char *Path = _getenv("PATH");
 	char *command_full, *token;
 
-
 	token = strtok(Path, ":");
 	while (token)
 	{

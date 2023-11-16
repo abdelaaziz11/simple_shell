@@ -9,14 +9,21 @@
 #include <sys/stat.h>
 
 #define MAX_INPUT_SIZE 1024
+#define PATH_MAX 1024
 
 extern char **environ;
 
 char *_getenv(const char *name);
 char *get_cmd(char *command);
 char **str_split(char *buffer, char *del);
-int _setenv(const char *key, const char *value, int overwrite);
-int _unsetenv(const char *key);
-void executeCommand(char **av, char **env);
+int my_unsetenv(char **commandArgs);
+int my_setenv(char **commandArgs);
+/*int my_cd(char **commandArgs);*/
+int executeMultipleCommands(char **commands, char **env);
+/*int executeAlias(char **commandArgs);*/
+/*int executeCommandWithExitStatus(char **argv, char **env);*/
+void executeRedirectCommand(char **argv, char **env);
+void executeCommand(char **argv, char **env);
+
 
 #endif /* MAIN_H */

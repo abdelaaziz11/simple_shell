@@ -18,9 +18,20 @@ char **str_split(char *buffer, char *del)
 
 	token = strtok(buffer, del);
 	all_tokens = malloc(sizeof(char *) * 1024);
+	if (all_tokens == NULL)
+	{
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(EXIT_FAILURE);
+	}
+
 	while (token)
 	{
-		all_tokens[i] = token;
+		all_tokens[i] = strdup(token);
+		if (all_tokens[i] == NULL)
+		{
+			fprintf(stderr, "Memory allocation failed\n");
+			exit(EXIT_FAILURE);
+		}
 		token = strtok(NULL, del);
 		i++;
 	}

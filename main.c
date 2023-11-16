@@ -4,7 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
 /**
 * main - read and implement the functions
 * @argc: argumant count
@@ -14,10 +13,9 @@
 */
 int main(int argc, char **argv, char **env)
 {
-	char *buffer = NULL;
+	char *buffer = NULL, **commandArgs;
 	size_t size_buffer;
 	ssize_t number_char;
-	char **commandArgs;
 	(void)argc;
 	(void)argv;
 
@@ -28,11 +26,10 @@ int main(int argc, char **argv, char **env)
 		if (number_char == EOF)
 		{
 			printf("\n");
-			free(buffer);
-			exit(EXIT_FAILURE);
+			free(buffer), exit(EXIT_FAILURE);
 		}
 		commandArgs = str_split(buffer, " \t\n");
-		if (buffer[0] == '#')
+		if (buffer[0] == '#' || commandArgs[0] == NULL)
 		{
 			free(commandArgs);
 			continue;
@@ -40,13 +37,19 @@ int main(int argc, char **argv, char **env)
 		if (strcmp(commandArgs[0], "exit") == 0)
 		{
 			free(buffer);
-			free(commandArgs);
-			exit(EXIT_SUCCESS);
+			free(commandArgs), exit(EXIT_SUCCESS);
 		}
-		executeCommand(commandArgs, env);
+		if (strstr(buffer, "&&") != NULL || strstr(buffer, "||") != NULL)
+		{
+			commandArgs = str_split(buffer, "&|\n");
+			executeMultipleCommands(commandArgs, env);
+			free(commandArgs);
+		}
+		else if (strchr(buffer, '>') != NULL)
+			executeRedirectCommand(commandArgs, env);
+		else
+			executeCommand(commandArgs, env);
 		free(commandArgs);
 	}
-	free(buffer);
 	return (0);
 }
-

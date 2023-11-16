@@ -4,41 +4,26 @@
 #include <string.h>
 #include <unistd.h>
 /**
-* _setenv - add environment variable or change environment variable
-* @key: name of environment variable
-* @value: value of environment variable
-* @overwrite: overwrite and change environment variable
-* Return: Always 0
+* my_setenv - add environment variable or change environment variable
+* @commandArgs: command o arguments
+* Return: Always 0 or -1
 */
-int _setenv(const char *key, const char *value, int overwrite)
+int my_setenv(char **commandArgs)
 {
-	char *new_envar;
-	int len = 0, i = 0;
+	int overwrite;
 
-	if (key == NULL || value == NULL)
-		return (-1);
-	while (environ[i])
+	if (!commandArgs[1] || !commandArgs[2] || commandArgs[3] != NULL)
 	{
-		len = strlen(key);
-		if (strncmp(environ[i], key, len) == 0)
-		{
-			if (overwrite)
-			{
-				new_envar = malloc(strlen(key) + strlen(value) + 2);
-				new_envar = strdup(key);
-				strcat(new_envar, "=");
-				strcat(new_envar, value);
-				environ[i] = new_envar;
-				return (0);
-			}
-		}
-		i++;
+		fprintf(stderr, "Usage: setenv VARIABLE VALUE\n");
+		return (-1);
 	}
-	new_envar = malloc(strlen(key) + strlen(value) + 2);
-	new_envar = strdup(key);
-	strcat(new_envar, "=");
-	strcat(new_envar, value);
-	environ[i] = new_envar;
-	environ[i + 1] = NULL;
+
+	overwrite = 1;
+	if (setenv(commandArgs[1], commandArgs[2], overwrite) == -1)
+	{
+		perror("setenv");
+		return (-1);
+	}
+
 	return (0);
 }
