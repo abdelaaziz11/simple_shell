@@ -16,25 +16,27 @@ void executeCommand(char **av, char **env)
 	pid_t pid = fork();
 	char *command;
 
-	if (pid == 0) {
-	command = get_cmd(av[0]);
-	if (command) {
+	if (pid == 0)
+	{
+		command = get_cmd(av[0]);
+		if (command)
+		{
 		execve(command, av, env);
 		perror("Execution failed");
 		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		fprintf(stderr, "Command not found\n");
- 		exit(EXIT_FAILURE);
-	}
+		}
+		else
+		{
+			fprintf(stderr, "Command not found\n");
+			exit(EXIT_FAILURE);
+		}
 	}
 	else if (pid < 0)
 	{
-	perror("Fork failed");
+		perror("Fork failed");
 	}
 	else
 	{
-	wait(NULL);
+		wait(NULL);
 	}
 }

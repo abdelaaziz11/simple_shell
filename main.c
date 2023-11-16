@@ -47,6 +47,6 @@ int main(int argc, char **argv, char **env)
 		free(commandArgs);
 	}
 	free(buffer);
-	return 0;
+	return (0);
 }
 

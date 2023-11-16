@@ -15,18 +15,18 @@ char *_getenv(const char *name)
 	char *token;
 	int i = 0;
 
-	if (name == NULL || environ == NULL) {
-		return NULL;
+	if (name == NULL || environ == NULL)
+	{
+		return (NULL);
 	}
-
-	while (environ[i] != NULL) {
+	while (environ[i] != NULL)
+	{
 		token = strtok(environ[i], "=");
 		if (strcmp(token, name) == 0)
 		{
-			return strtok(NULL, "=");
+			return (strtok(NULL, "="));
 		}
 		i++;
 	}
-
-	return NULL;
+	return (NULL);
 }
