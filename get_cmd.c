@@ -21,7 +21,7 @@ char *get_cmd(char *command)
 	while (token)
 	{
 		command_full = malloc(strlen(command) + strlen(token) + 2);
-		strcpy(command_full, token);
+		strcpy(command_full, token); /* copy token to command*/
 		strcat(command_full, "/");
 		strcat(command_full, command);
 		if (stat(command_full, &st) == 0)
