@@ -17,7 +17,7 @@ char *_getenv(const char *name);
 char *get_cmd(char *command);
 char **str_split(char *buffer, char *del);
 int my_unsetenv(char **commandArgs);
-int  my_setenv(char **commandArgs);
+int my_setenv(char **commandArgs);
 /*int my_cd(char **commandArgs);*/
 int executeMultipleCommands(char **commands, char **env);
 /*int executeAlias(char **commandArgs);*/
