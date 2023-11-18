@@ -1,55 +1,96 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
 /**
-* main - read and implement the functions
-* @argc: argumant count
-* @argv: pointer array of argument vector
-* @env: environment
-* Return: 0 if success or 1 if Failure
+ * main - function main that entry point
+ * @ac: number of arguments
+ * @av: array of arguments
+ * Return: always 0
 */
-int main(int argc, char **argv, char **env)
+int main(int ac, char *av[])
 {
-	char *buffer = NULL, **commandArgs;
-	size_t size_buffer;
-	ssize_t number_char;
-	(void)argc;
-	(void)argv;
+	size_t length;
+	int nrc;
+	char *line = NULL, *com;
+	int loop = 0, status = 0;
+	(void)ac;
 
 	while (1)
 	{
-		write(1, "$ ", 2);
-		number_char = getline(&buffer, &size_buffer, stdin);
-		if (number_char == EOF)
+		if (isatty(STDIN_FILENO) == 1)
+			write(STDOUT_FILENO, "#khouda/byd$ ", 13);
+		nrc = getline(&line, &length, stdin);
+		if (nrc >= 0)
 		{
-			printf("\n");
-			free(buffer), exit(EXIT_FAILURE);
+			line[nrc - 1] = '\0';
+			com = Trim_spaces(line);
+			status = (!built_in(com, line, status)) ? exec_File(com, av[0]) : status;
+			free(line);
+			line = NULL;
 		}
-		commandArgs = str_split(buffer, " \t\n");
-		if (buffer[0] == '#' || commandArgs[0] == NULL)
-		{
-			free(commandArgs);
-			continue;
-		}
-		if (strcmp(commandArgs[0], "exit") == 0)
-		{
-			free(buffer);
-			free(commandArgs), exit(EXIT_SUCCESS);
-		}
-		if (strstr(buffer, "&&") != NULL || strstr(buffer, "||") != NULL)
-		{
-			commandArgs = str_split(buffer, "&|\n");
-			executeMultipleCommands(commandArgs, env);
-			free(commandArgs);
-		}
-		else if (strchr(buffer, '>') != NULL)
-			executeRedirectCommand(commandArgs, env);
 		else
-			executeCommand(commandArgs, env);
-		free(commandArgs);
+		{
+			free(line);
+			break;
+		}
+		loop++;
 	}
 	return (0);
 }
+
+/**
+ * Trim_spaces - ignores surrounded spaces
+ * in the command line
+ * @previous_line: command line
+ * Return: command line after the
+ * spaces are removed.
+*/
+char *Trim_spaces(char *previous_line)
+{
+	char *endline, *newline = previous_line;
+
+	for (; *newline == ' '; newline++)
+		;
+	endline = newline + (_str_len(newline) - 1);
+	for (; endline > newline && *endline == ' '; endline--)
+		;
+	*(endline + 1) = '\0';
+	return (newline);
+}
+/**
+ * create_buf - allocates memory
+ * @num_args: number of arguments
+ * @command: command line
+ * Return: arguments
+ */
+char **create_buf(int num_args, char *command)
+{
+	char **arg, *delimiter = " ", *args_use;
+	int i = 0;
+
+	arg = malloc((num_args + 1) * sizeof(char *));
+	if (!arg)
+		return (NULL);
+	args_use = strtok(command, delimiter);
+	for (i = 0; args_use != NULL; i++)
+	{
+	arg[i] = _str_dup(args_use);
+	args_use = strtok(NULL, delimiter);
+	}
+	arg[i] = NULL;
+	return (arg);
+}
+/**
+ * Custom_free - free all memory
+ * @args: arguments
+ */
+void Custom_free(char **args)
+{
+	int i;
+
+	if (args != NULL)
+	{
+		for (i = 0; args[i] != NULL; i++)
+			free(args[i]);
+		free(args);
+	}
+}
+
