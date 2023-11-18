@@ -2,7 +2,7 @@
 /**
  * exec_File - executes the specified files
  * @command_line: execute file
- * @programName: av of main.
+ * @programName: av of main
  * Return: The status
 */
 int exec_File(char *command_line, char *programName)
