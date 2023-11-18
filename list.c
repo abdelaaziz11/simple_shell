@@ -58,7 +58,8 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 	if (*head)
 	{
 		list_t *node = *head;
-	        while (node->next)
+
+		while (node->next)
 			node = node->next;
 		node->next = new_node;
 	}

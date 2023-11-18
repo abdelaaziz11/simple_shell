@@ -16,7 +16,8 @@ int interactive_funtion(info_t *info)
  * @delim: the delimeter string
  * Return: 1 if true, 0 if false
  */
-int is_delimiter(char c, char *delim) {
+int is_delimiter(char c, char *delim)
+{
 	for (; *delim; delim++)
 	{
 		if (*delim == c)

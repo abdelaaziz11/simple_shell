@@ -49,7 +49,7 @@ int set_alias(info_t *info, char *str)
 	if (!equal_sign_position)
 		return (1);
 	if (!*++equal_sign_position)
-		return my_unset_alias(info, str);
+		return (my_unset_alias(info, str));
 	my_unset_alias(info, str);
 	return (add_node_end(&(info->alias), str, 0) == NULL);
 }
@@ -65,7 +65,7 @@ int my_print_alias(list_t *node)
 
 	if (node)
 	{
-		equal_sign_position = _strchr(node->str, '=');        
+		equal_sign_position = _strchr(node->str, '=');
 		for (iterator = node->str; iterator <= equal_sign_position; iterator++)
 			_putchar(*iterator);
 		_putchar('\'');
@@ -81,7 +81,7 @@ int my_print_alias(list_t *node)
  *          constant function prototype.
  *  Return: Always 0
  */
- int _my_alias(info_t *info)
+int _my_alias(info_t *info)
 {
 	int i = 0;
 	char *equal_sign_position = NULL;

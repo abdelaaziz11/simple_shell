@@ -60,7 +60,7 @@ int print_d(int input, int fd)
 
 	if (input < 0)
 	{
-		 __putchar('-');
+		__putchar('-');
 		return (1 + print_d(-input, fd));
 	}
 	while (divisor <= input / 10)
@@ -85,7 +85,8 @@ int print_d(int input, int fd)
 char *convert_number(long int num, int base, int flags)
 {
 	static char buffer[50];
-	char *array = (flags & CONVERT_LOWERCASE) ? "0123456789abcdef" : "0123456789ABCDEF";
+	char *array = (flags & CONVERT_LOWERCASE) ? "0123456789abcdef"
+		: "0123456789ABCDEF";
 	char *ptr = &buffer[49];
 	unsigned long n;
 
@@ -94,8 +95,7 @@ char *convert_number(long int num, int base, int flags)
 	do {
 		*--ptr = array[n % base];
 		n /= base;
-	}
-	while (n != 0);
+	} while (n != 0);
 	if (num < 0 && !(flags & CONVERT_UNSIGNED))
 		*--ptr = '-';
 	return (strdup(ptr));
