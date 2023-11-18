@@ -1,55 +1,44 @@
-#include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-/**
-* main - read and implement the functions
-* @argc: argumant count
-* @argv: pointer array of argument vector
-* @env: environment
-* Return: 0 if success or 1 if Failure
-*/
-int main(int argc, char **argv, char **env)
-{
-	char *buffer = NULL, **commandArgs;
-	size_t size_buffer;
-	ssize_t number_char;
-	(void)argc;
-	(void)argv;
+#include "shell.h"
 
-	while (1)
+/**
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
+ */
+int main(int ac, char **av)
+{
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
+
+	asm ("mov %1, %0\n\t"
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
+
+	if (ac == 2)
 	{
-		write(1, "$ ", 2);
-		number_char = getline(&buffer, &size_buffer, stdin);
-		if (number_char == EOF)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
-			printf("\n");
-			free(buffer), exit(EXIT_FAILURE);
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eput_char('\n');
+				_eput_char(BUF_FLUSH);
+				exit(127);
+			}
+			return (EXIT_FAILURE);
 		}
-		commandArgs = str_split(buffer, " \t\n");
-		if (buffer[0] == '#' || commandArgs[0] == NULL)
-		{
-			free(commandArgs);
-			continue;
-		}
-		if (strcmp(commandArgs[0], "exit") == 0)
-		{
-			free(buffer);
-			free(commandArgs), exit(EXIT_SUCCESS);
-		}
-		if (strstr(buffer, "&&") != NULL || strstr(buffer, "||") != NULL)
-		{
-			commandArgs = str_split(buffer, "&|\n");
-			executeMultipleCommands(commandArgs, env);
-			free(commandArgs);
-		}
-		else if (strchr(buffer, '>') != NULL)
-			executeRedirectCommand(commandArgs, env);
-		else
-			executeCommand(commandArgs, env);
-		free(commandArgs);
+		info->readfd = fd;
 	}
-	return (0);
+	_populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
