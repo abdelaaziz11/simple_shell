@@ -57,6 +57,7 @@ int _my_setenv(info_t *info)
 int _myunsetenv(info_t *info)
 {
 	int success = 0, i;
+
 	if (info->argc <= 1)
 	{
 		_eputs("Too few arguments.\n");

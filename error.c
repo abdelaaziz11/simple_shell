@@ -9,6 +9,7 @@
 void _eputs(char *str)
 {
 	int i;
+
 	if (!str)
 		return;
 	for (i = 0; str[i] != '\0'; i++)

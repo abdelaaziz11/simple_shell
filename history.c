@@ -62,12 +62,8 @@ int read_history(info_t *info)
 	struct stat st;
 	char *buf = NULL, *filename = get_history_file(info);
 
-	if (!filename)
-		return (0);
 	fd = open(filename, O_RDONLY);
 	free(filename);
-	if (fd == -1)
-		return (0);
 	if (fstat(fd, &st) != 0 || st.st_size < 2)
 	{
 		close(fd);
@@ -75,11 +71,6 @@ int read_history(info_t *info)
 	}
 	fsize = st.st_size;
 	buf = malloc(sizeof(char) * (fsize + 1));
-	if (!buf)
-	{
-	close(fd);
-	return (0);
-	}
 	rdlen = read(fd, buf, fsize);
 	buf[fsize] = 0;
 	if (rdlen <= 0)

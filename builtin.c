@@ -36,31 +36,31 @@ int _my_exit(info_t *info)
  */
 int _my_cd(info_t *info)
 {
-	char *current_directory, *target_directory, buffer[1024];
+	char *cur_dir, *tag_dir, buffer[1024];
 	int chdir_ret;
 
-	current_directory = getcwd(buffer, 1024);
-	if (!current_directory)
+	cur_dir = getcwd(buffer, 1024);
+	if (!cur_dir)
 	_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		target_directory = _get_env(info, "HOME=");
-		if (!target_directory)
-			chdir_ret = chdir((target_directory = _get_env(info, "PWD=")) ? target_directory : "/");
+		tag_dir = _get_env(info, "HOME=");
+		if (!tag_dir)
+			chdir_ret = chdir((tag_dir = _get_env(info, "PWD=")) ? tag_dir : "/");
 		else
-			chdir_ret = chdir(target_directory);
+			chdir_ret = chdir(tag_dir);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
 		if (!_get_env(info, "OLDPWD="))
 		{
-			_puts(current_directory);
+			_puts(cur_dir);
 			_putchar('\n');
 			return (1);
 		}
 		_puts(_get_env(info, "OLDPWD="));
 		_putchar('\n');
-		chdir_ret = chdir((target_directory = _get_env(info, "OLDPWD=")) ? target_directory : "/");
+		chdir_ret = chdir((tag_dir = _get_env(info, "OLDPWD=")) ? tag_dir : "/");
 	}
 	else
 		chdir_ret = chdir(info->argv[1]);

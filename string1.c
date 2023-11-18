@@ -31,7 +31,7 @@ char *_strdup(const char *str)
 {
 	int length = 0, i;
 	char *ret;
-	
+
 	if (str == NULL)
 		return (NULL);
 	while (*str++)
@@ -75,7 +75,7 @@ int _putchar(char c)
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (i >= WRITE_BUF_SIZE || c == BUF_FLUSH)  
+	if (i >= WRITE_BUF_SIZE || c == BUF_FLUSH)
 	{
 		write(1, buf, i);
 		i = 0;

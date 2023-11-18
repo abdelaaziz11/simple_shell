@@ -36,11 +36,11 @@ char *dup_chars(char *pathstr, int start, int stop)
 		return (NULL);
 	buf = (char *)malloc(stop - start + 1);
 	if (!buf)
-		return NULL;
+		return (NULL);
 	for (k = 0, i = start; i < stop; i++)
 	{
 		if (pathstr[i] != ':')
-			buf[k++] = pathstr[i];	
+			buf[k++] = pathstr[i];
 	}
 	buf[k] = '\0';
 	return (buf);
