@@ -15,7 +15,6 @@ int built_in(char *command, char *free_line, int proces_stat)
 				exit(WEXITSTATUS(proces_stat)), 0) :
 			(isbuilt_in == 1) ? (print_env(), 1) : 0);
 }
-
 /**
  * print_env - prints the environment variables
 */
