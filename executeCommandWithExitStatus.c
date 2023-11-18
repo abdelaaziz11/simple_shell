@@ -1,10 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-#include <ctype.h>
 /**
 * executeCommandWithExitStatus - execute Command With Exit Status
 * @argv: array of argument
@@ -35,10 +29,7 @@ int executeCommandWithExitStatus(char **argv, char **env)
 			exit(status);
 		}
 		else
-		{
-			fprintf(stderr, "Command not found\n");
-			exit(EXIT_FAILURE);
-		}
+			fprintf(stderr, "Command not found\n"), exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 		perror("Fork failed");
@@ -52,9 +43,7 @@ int executeCommandWithExitStatus(char **argv, char **env)
 
 			setenv_args[2] = exit_status_str;
 			if (my_setenv(setenv_args) == -1)
-			{
-				return (-1);		
-			}
+				return (-1);
 		}
 	}
 	return (0);
